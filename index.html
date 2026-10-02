@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exodation's Roblox Portefolio</title>
+    <meta name="description" content="Portfolio of Exodation, a Roblox Programmer & Systems Developer.">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Vanta.js Background Container -->
+    <div id="vanta-bg" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            VANTA.CELLS({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                color1: 0x500000,
+                color2: 0x390000,
+                size: 2.20,
+                speed: 1.00
+            });
+
+            // Fluid, delayed "pulsy" background reaction on scroll
+            let targetScroll = 0;
+            let currentScroll = 0;
+
+            window.addEventListener('scroll', () => {
+                targetScroll = window.scrollY;
+            });
+
+            function updateBackground() {
+                // Lerp current scroll towards target scroll (creates the delayed/loose feel)
+                currentScroll += (targetScroll - currentScroll) * 0.03;
+
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = maxScroll > 0 ? currentScroll / maxScroll : 0;
+
+                // Darken, blur, and scale (zoom in on the cells)
+                const blurValue = scrollPercent * 25;
+                const brightnessValue = 1 - (scrollPercent * 0.75);
+                const scaleValue = 1 + (scrollPercent * 0.5);
+
+                const bgElement = document.getElementById('vanta-bg');
+                if (bgElement) {
+                    bgElement.style.filter = `blur(${blurValue}px) brightness(${brightnessValue})`;
+                    bgElement.style.transform = `scale(${scaleValue})`;
+                }
+
+                requestAnimationFrame(updateBackground);
+            }
+            updateBackground();
+        });
+    </script>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <span class="logo">Exodation</span>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#works">Works</a></li>
+                <li><a href="#commission">Hiring</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero slide-up">
+            <div class="hero-content section-content">
+                <h1 class="typewrite">Hi, I'm <span class="highlight-name">Exodation</span></h1>
+                <p class="hero-subtitle">
+                    Roblox Programmer & Systems Developer with <span class="highlight">5 years of experience</span>. I
+                    create <span class="highlight">clean, modular</span>, and <span class="highlight">highly
+                        performant</span> systems.
+                </p>
+                <p class="hero-stats highlight">
+                    Contributed to over 50M+ visits.
+                </p>
+                <div class="hero-actions">
+                    <a href="#about" class="btn btn-secondary">About Me</a>
+                    <a href="#works" class="btn btn-primary">My Work</a>
+                    <a href="#commission" class="btn btn-secondary">Hiring</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section fade-in">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="typewrite">About Me</h2>
+                </div>
+                <div class="about-content">
+                    <p>I've been developing on Roblox for a total of <span class="highlight">5 years</span>, making me
+                        confident with most of the engine's features. If you need something made, I can make it.</p>
+
+                    <p>My code is written to be <span class="highlight">secure, efficient, and
+                            performance-oriented</span>. I build modular systems with expansion in mind, using comments
+                        to carefully section my code so everything remains <span class="highlight">organized and
+                            readable</span>.</p>
+
+                    <p>If there are multiple architectural choices to be made regarding a system, I'll always <span
+                            class="highlight">contact you to discuss the best approach</span>.</p>
+
+                    <p>My timezone is GMT. Right now, it's <span id="local-time" class="highlight"></span> for me!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="works" class="section fade-in">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="typewrite">Selected Works</h2>
+                    <h3>(Being updated)</h3>
+                </div>
+
+                <div class="works-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="systems">Systems</button>
+                    <button class="filter-btn" data-filter="Commissions">Commissions</button>
+                </div>
+
+                <div class="grid works-grid" id="works-grid">
+                </div>
+            </div>
+        </section>
+
+        <section id="commission" class="section fade-in">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="typewrite">Commission Information</h2>
+                </div>
+
+                <div class="commission-timeline">
+                    <div class="commission-card glow-card left fade-in">
+                        <div class="glow-content">
+                            <h3><i class="ph ph-chat-circle-dots"></i> Contact & Availability</h3>
+                            <ul class="clean-list">
+                                <li><strong>Availability:</strong> Part-time roles or per-task commissions.</li>
+                                <li><strong>Timezone:</strong> GMT</li>
+                                <li><strong>Getting Started:</strong> Don't be afraid. Send me a message with a clear
+                                    desription of the tasks you need work on.
+                                    <br>
+                                    <br>
+                                    I reply as soon as possible.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="commission-card glow-card right fade-in">
+                        <div class="glow-content">
+                            <h3><i class="ph ph-currency-circle-dollar"></i> Pricing & Payment</h3>
+                            <p>Pricing is dynamic. It depends entirely on how time-consuming a commission is and can be
+                                negotiated.</p>
+                            <ul class="clean-list">
+                                <li><strong>50/50:</strong> 50% at the start, 50% upon finish.</li>
+                                <li><strong>25/50/25:</strong> 25% at the start, 50% in the middle, 25% upon finish.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="commission-card glow-card left fade-in">
+                        <div class="glow-content">
+                            <h3><i class="ph ph-cube"></i> Workflow & Assets</h3>
+                            <ul class="clean-list">
+                                <li><strong>Full Transparency:</strong> Regular progress updates shown throughout
+                                    development.</li>
+                                <li><strong>Asset Dependency:</strong> You must provide all visual assets (particles,
+                                    animations, UI) before I can implement them.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="commission-card glow-card right fade-in">
+                        <div class="glow-content">
+                            <h3><i class="ph ph-wrench"></i> Maintenance & Terms</h3>
+                            <ul class="clean-list">
+                                <li><strong>Free Support:</strong> Zero-cost maintenance for any bugs or
+                                    miscommunications on my end.</li>
+                                <li><strong>Extra Features:</strong> Any additions outside the original brief will be
+                                    charged extra.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section fade-in">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="typewrite">Let's Talk</h2>
+                    <p>Ready to get started? Reach out directly.</p>
+
+                    <div
+                        style="margin-top: 1.5rem; max-width: 750px; color: var(--text-secondary); line-height: 1.6; border-left: 2px solid var(--accent); padding-left: 1rem;">
+                        <p><strong style="color: var(--text-primary);">Before you message:</strong> Please do not just
+                            say <span style="font-style: italic;">"Make me a gun system"</span>. I need a clear,
+                            detailed list of all the exact features you want.</p>
+                        <p style="margin-top: 0.5rem;">The more specific you are, the faster we can start. Providing a
+                            structured document outlining your requirements is highly preferred and always appreciated.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-container">
+                    <div class="contact-card glow-card">
+                        <div class="glow-content"
+                            style="display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;">
+                            <div class="discord-icon" style="margin: 0;">
+                                <svg width="72" height="72" viewBox="0 0 127.14 96.36" fill="#5865F2"
+                                    xmlns="http://www.w3.org/2000/svg" style="display:block;">
+                                    <path
+                                        d="M107.7 8.07C99.71 3.92 91.08 1.04 82.02 0 80.93 2.05 79.72 4.67 78.85 6.87 69.34 5.43 59.95 5.43 50.66 6.87 49.79 4.67 48.51 2.05 47.42 0 38.36 1.04 29.73 3.92 21.74 8.07 5.6 32.55 1.45 56.45 3.63 79.91 14.41 88.08 24.8 93.18 34.95 96.36 37.45 92.83 39.7 89.04 41.6 85.05 37.91 83.67 34.42 81.93 31.11 79.91 31.98 79.25 32.81 78.55 33.61 77.81 54.19 87.5 75.46 87.5 95.9 77.81 96.7 78.55 97.53 79.25 98.4 79.91 95.09 81.93 91.6 83.67 87.91 85.05 89.81 89.04 92.06 92.83 94.56 96.36 104.71 93.18 115.1 88.08 125.88 79.91 128.45 51.52 121.36 27.67 107.7 8.07ZM42.48 65.62C36.19 65.62 31.02 59.81 31.02 52.61 31.02 45.41 35.97 39.6 42.48 39.6 48.99 39.6 54.16 45.41 53.94 52.61 53.94 59.81 48.99 65.62 42.48 65.62ZM86.86 65.62C80.56 65.62 75.39 59.81 75.39 52.61 75.39 45.41 80.35 39.6 86.86 39.6 93.37 39.6 98.54 45.41 98.32 52.61 98.32 59.81 93.37 65.62 86.86 65.62Z" />
+                                </svg>
+                            </div>
+                            <div class="discord-info" style="text-align: left; flex: 1;">
+                                <h3 style="margin-bottom: 0.25rem;">Discord</h3>
+                                <p class="discord-tag"
+                                    style="margin-bottom: 1rem; font-family: var(--font-display); font-size: 1.75rem; font-weight: bold; color: white;">
+                                    Exodation</p>
+                                <div class="contact-actions"
+                                    style="justify-content: flex-start; margin-bottom: 0.5rem;">
+                                    <a href="https://discordapp.com/users/652552457397731359" class="btn btn-primary"
+                                        target="_blank"><i class="ph-fill ph-discord-logo"></i> Message Me</a>
+                                    <a href="https://www.roblox.com/users/1903163699/profile" class="btn btn-secondary"
+                                        target="_blank"><i class="ph-fill ph-cube"></i> Roblox Profile</a>
+                                </div>
+                                <p class="contact-hint" style="text-align: left;">Or copy my tag:
+                                    <strong>Exodation</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="more-about" class="section fade-in">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2 class="typewrite">More About Me</h2>
+                </div>
+                <div class="grid"
+                    style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 600px; margin: 0 auto;">
+                    <a href="skills.html" class="glow-card"
+                        style="height: 100px; text-decoration: none; color: inherit;">
+                        <div class="glow-content"
+                            style="padding: 0; display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;">
+                            <h3 style="margin: 0; font-family: var(--font-display); font-size: 1.25rem;">Additional
+                                Skills</h3>
+                        </div>
+                    </a>
+                    <a href="vestiges.html" class="glow-card"
+                        style="height: 100px; text-decoration: none; color: inherit;">
+                        <div class="glow-content"
+                            style="padding: 0; display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;">
+                            <h3 style="margin: 0; font-family: var(--font-display); font-size: 1.25rem;">Vestiges of
+                                Phlanange</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Exodation</h3>
+                <p>Roblox Programmer & Systems Developer.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#works">Works</a>
+                <a href="skills.html">Skills</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Exodation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
